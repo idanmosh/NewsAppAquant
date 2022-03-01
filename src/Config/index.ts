@@ -5,5 +5,5 @@ interface Config {
 
 export const config: Config = {
   BASE_URL: 'https://newsapi.org/v2/top-headlines',
-  API_KEY: 'd7466e3fa2e247eb9892d703c2ce717d',
+  API_KEY: '529694364bc94155916c1279d1c0a0b3',
 };

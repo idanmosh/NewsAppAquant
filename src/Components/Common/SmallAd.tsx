@@ -14,12 +14,10 @@ export interface AdsProps {
 const SmallAd: FC<AdsProps> = ({ads, onPress}) => {
   return (
     <>
-      {ads?.data?.map(ad => (
+      {ads?.data?.map((ad, index) => (
         <TouchableWithoutFeedback
-          onPress={() => {
-            console.log(ad);
-            onPress(ad);
-          }}
+          key={index}
+          onPress={() => onPress(ad)}
           style={styles.container}>
           <Text>Title: {ad.title}</Text>
           <Text>Published Date: {ad.publishedAt}</Text>
@@ -41,6 +39,7 @@ const styles = StyleSheet.create({
     margin: calcSize(5),
     padding: calcSize(5),
     backgroundColor: 'blue',
+    borderRadius: 15,
   },
   image: {height: 50, width: 50},
 });

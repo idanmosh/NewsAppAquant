@@ -12,7 +12,7 @@ export const fetchCategories = async () => {
     let requests: Array<Promise<void>> = [];
 
     CATEGORIES.map(category => {
-      requests.push(axios.get(urlBuilder(`country=us&category=${category}`)));
+      requests.push(api.get(urlBuilder(`country=us&category=${category}`)));
     });
 
     let response: Array<any> = await Promise.all(requests);

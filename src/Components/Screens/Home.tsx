@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {HomeScreenProps} from '../../Routes';
 import * as api from '../../Api';
@@ -11,21 +11,26 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 const Home: FC<HomeScreenProps> = ({navigation}) => {
   const {data} = useQuery('categories', api.fetchCategories);
 
-  const onPress = (ad: any) => {
-    navigation.navigate('BigAd', {ad});
-  };
+  const onPress = (ad: any) => navigation.navigate('BigAd', {ad});
 
-  const [dataState, setDataState] = useState(data);
+  const [dataState, setDataState] = useState([]);
 
   const onPressCategory = (category: string) => {
     setDataState(data?.filter((val: any) => val.category === category));
   };
 
+  useEffect(() => {
+    if (data) {
+      setDataState(data);
+    }
+  }, [data]);
+
   const HeaderComponent = () => {
     return (
       <View style={styles.categoryContainer}>
-        {CATEGORIES.map(category => (
+        {CATEGORIES.map((category, index) => (
           <TouchableWithoutFeedback
+            key={index}
             onPress={() => onPressCategory(category)}
             style={styles.categoryItem}>
             <Text>{category}</Text>
@@ -42,7 +47,7 @@ const Home: FC<HomeScreenProps> = ({navigation}) => {
       keyExtractor={extractIndexToString}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
-      ListFooterComponent={<View style={{height: calcSize(30)}} />}
+      ListFooterComponent={<View style={{height: calcSize(50)}} />}
       contentContainerStyle={{
         marginTop: calcSize(30),
       }}
